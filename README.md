@@ -14,7 +14,7 @@
 [license-image]: https://img.shields.io/npm/l/packito.svg
 [License-url]:./LICENSE
 
-> Packito is a cli tool to clean package before publishing.
+> Packito is a cli tool to clean package before publishing it.
 
 ### Purpose
 - Simple to use

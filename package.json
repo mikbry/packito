@@ -1,14 +1,17 @@
 {
   "name": "packito",
   "version": "0.1.0",
-  "description": "clean your package before publishing it",
-  "main": "index.js",
+  "description": "clean your package before publishing it !",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "repository": "https://github.com/mikbry/packito.git",
+  "bugs": "https://github.com/mikbry/packito/issues",
+  "homepage": "https://github.com/mikbry/packito",
   "author": "Mik <mik@miklabs.com>",
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "yarn build  &&  cross-env NODE_ENV=development node ./dist",
     "lint": "$(yarn bin)/eslint src",
     "test": "cross-env NODE_ENV=test  $(yarn bin)/mocha  --require esm test",
     "coverage": "$(yarn bin)/nyc _mocha  test",
@@ -23,13 +26,15 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
+    "minimist": "^1.2.0",
     "node-emoji": "^1.10.0",
-    "node-fetch": "^2.6.0",
-    "yargs": "^14.2.0"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@rollup/plugin-json": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^6.0.0",
     "chai": "^4.2.0",
     "cross-env": "^6.0.3",
     "eslint": "^6.7.2",
