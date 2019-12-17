@@ -1,0 +1,16 @@
+src
+test
+node_modules
+*.DS_Store
+*config*
+yarn.lock
+coverage
+.github
+.nyc_output
+.nycrc
+data
+rollup.config.js
+.eslintrc
+commitlint.config.js
+yarn-error.js
+.travis.yml
