@@ -17,4 +17,4 @@ export const getPackageDependencyVersion = (name, ref) => {
   return v;
 };
 
-export const getPackageVersion = () => pkg.version;
+export const getPackage = () => pkg;

@@ -7,14 +7,30 @@
 import chalk from 'chalk';
 import emoji from 'node-emoji';
 import minimist from 'minimist';
-import { getPackageVersion } from './utils/packageUtils';
+import { getPackage } from './utils/package';
+import Packito from './Packito';
 
 class PackitoCli {
   constructor(args, output, exit) {
     this.output = output;
-    this.args = minimist(args);
+    this.args = args;
     this.exit = exit;
     this.chalk = chalk;
+    this.options = {
+      string: ['dist'],
+      boolean: ['nopublish', 'help'],
+      stopEarly: true,
+      alias: {
+        d: 'dist',
+        n: 'nopublish',
+        h: 'help',
+      },
+      default: {
+        dist: './dist',
+        nopublish: false,
+        help: false,
+      },
+    };
   }
 
   log(text, ...opts) {
@@ -26,7 +42,7 @@ class PackitoCli {
   }
 
   header() {
-    const version = getPackageVersion('packito');
+    const { version } = getPackage('packito');
     this.log(chalk.bold(emoji.emojify(`Packito cleans package before publishing v${version}`)));
   }
 
@@ -40,14 +56,14 @@ class PackitoCli {
     this.log('Displays help informations.');
     this.log('');
     this.log('Options:');
-    this.log('-d, --dist                           Path to publish from');
-    this.log('-n, --no-publish               Skips publishing step');
-    this.log('-h, --help                          Displays help informations');
+    this.log('-d, --dist               Path to publish from');
+    this.log('-n, --nopublish          Skips publishing step');
+    this.log('-h, --help               Displays help informations');
     this.log('');
     this.log('Bin to publisher:');
-    this.log('npm                                   Publish using npm.');
-    this.log('lerna                                  Publish using lerna.');
-    this.log('np                                      Publish using np.');
+    this.log('npm                      Publish using npm.');
+    this.log('lerna                    Publish using lerna.');
+    this.log('np                       Publish using np.');
     this.log('');
     this.log('Examples:');
     this.log('$ packito');
@@ -55,12 +71,20 @@ class PackitoCli {
     this.log('$ packito -d ./publish np patch');
   }
 
-  execute() {
+  async execute() {
     this.hrstart = process.hrtime();
     this.header();
-    this.help();
-    // TODO execute
-    this.log('args=', this.args);
+    const args = minimist(this.args, this.options);
+    if (args.help) {
+      // Display help
+      this.help();
+    } else {
+      // WIP execute
+      const packito = new Packito(args.dist, args.n, args._);
+      const pkg = getPackage();
+      await packito.transform(pkg);
+      // this.log('args=', args);
+    }
   }
 }
 
@@ -77,7 +101,7 @@ const start = async () => {
   // Grab arguments
   const [, , ...args] = process.argv;
   const cli = new PackitoCli(args, output, process.exit);
-  cli.execute();
+  await cli.execute();
   return cli;
 };
 
