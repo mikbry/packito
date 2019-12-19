@@ -5,7 +5,7 @@
 [![NPM version][npm-image]][npm-url]
 [![License][license-image]][license-url]
 
-[travis-image]: https://travis-ci.com/mikbry/packito.svg
+[travis-image]: https://travis-ci.com/mikbry/packito.svg?branch=master
 [travis-url]: https://travis-ci.com/mikbry/packito
 [codecov-image]: https://codecov.io/gh/mikbry/packito/branch/master/graph/badge.svg?token=K4P0vnM5fh
 [codecov-url]: https://codecov.io/gh/mikbry/packito

@@ -70,10 +70,15 @@ export default class Packito {
     return this.pkg;
   }
 
-  async write() {
+  async write(packageFile = 'package.json') {
     let filehandle = null;
     try {
-      const f = path.join(this.outputDir, 'package.json');
+      await fsp.mkdir(this.outputDir, { recursive: true });
+    } catch (error) {
+      //
+    }
+    try {
+      const f = path.join(this.outputDir, packageFile);
       // TODO test if outputDir exist
       filehandle = await fsp.open(f, 'w');
       await filehandle.writeFile(this.data);

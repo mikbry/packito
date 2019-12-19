@@ -13,3 +13,7 @@ script:
   - yarn coverage
   - yarn report-coverage
   - codecov
+
+branches:
+  only:
+  - master
