@@ -24,21 +24,21 @@ describe('Cli', () => {
     const c = await cli(consol);
     expect(c).to.be.an('object');
     const { version } = getPackage('packito');
-    expect(stack[0]).to.equal(`\u001b[1mPackito cleans package before publishing v${version}\u001b[22m`);
+    expect(stack[0].indexOf(`Packito cleans package before publishing v${version}`) > -1).to.equal(true);
   });
   it('constructor', async () => {
     const pcli = new PackitoCli([], consol, process.exit);
     await pcli.execute(true);
     expect(pcli).to.be.an('object');
     const { version } = getPackage('packito');
-    expect(stack[0]).to.equal(`\u001b[1mPackito cleans package before publishing v${version}\u001b[22m`);
+    expect(stack[0].indexOf(`Packito cleans package before publishing v${version}`) > -1).to.equal(true);
   });
   it('help', async () => {
     const pcli = new PackitoCli(['--help'], consol, process.exit);
     await pcli.execute(true);
     expect(pcli).to.be.an('object');
     const { version } = getPackage('packito');
-    expect(stack[0]).to.equal(`\u001b[1mPackito cleans package before publishing v${version}\u001b[22m`);
+    expect(stack[0].indexOf(`Packito cleans package before publishing v${version}`) > -1).to.equal(true);
     expect(stack.length).to.equal(21);
   });
   it('error', async () => {
