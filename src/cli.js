@@ -88,8 +88,7 @@ class PackitoCli {
   }
 }
 
-const start = async () => {
-  const output = console;
+const start = async (output = console) => {
   const version = process.versions.node;
   const major = parseInt(version.split('.')[0], 10);
 
@@ -104,5 +103,5 @@ const start = async () => {
   await cli.execute();
   return cli;
 };
-
+export { PackitoCli };
 export default start;

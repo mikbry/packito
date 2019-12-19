@@ -13,8 +13,8 @@
     "build": "rollup -c && ./bin/packito.js ../dist/index.js && cp -r ./bin ./dist  && cp -f ./LICENSE ./dist/LICENSE",
     "dev": "yarn build  &&  cross-env NODE_ENV=development node ./dist",
     "lint": "$(yarn bin)/eslint src",
-    "test": "cross-env NODE_ENV=test  $(yarn bin)/mocha  --require esm test",
-    "coverage": "$(yarn bin)/nyc _mocha  test",
+    "test": "cross-env NODE_ENV=test  $(yarn bin)/mocha  --require esm",
+    "coverage": "cross-env NODE_ENV=test  $(yarn bin)/nyc  _mocha",
     "report-coverage": "$(yarn bin)/nyc report --reporter=text-lcov > coverage.lcov",
     "prepublishOnly": "yarn build"
   },
@@ -51,9 +51,6 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.9"
-  },
-  "esm": {
-    "cjs": true
   },
   "husky": {
     "hooks": {
