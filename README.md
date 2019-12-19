@@ -55,6 +55,7 @@ $ packito [options] [bin-to-publisher]
 ```
 
 ***Options***
+
 | name | alias | description |
 | ----------- | --- | ----------- |
 | --dist     | -d | Path to publish from |
@@ -62,6 +63,7 @@ $ packito [options] [bin-to-publisher]
 | --help     | -h | Displays help informations |
 
 ***Bin to publisher***
+
 | name | description |
 | -----------  | ----------- |
 | npm     | Publish using npm |
@@ -90,6 +92,7 @@ This json should be at root of the project, a sample:
   "publisher":  "np"
 }
 ```
+
 | name | type | description |
 | ----------- | --- | ----------- |
 | remove     | object | all keys to remove from packages.json (if =true or ='*' replace all) |
@@ -97,6 +100,7 @@ This json should be at root of the project, a sample:
 | files     | object | all files to copy in dist |
 | dist     | string | folder to publish to |
 | publisher     | string\|object | The publisher to use (npm, np, lerna) |
+
 ***Other command examples***
 > Publish to path 'publish'
 ```bash
