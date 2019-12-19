@@ -83,13 +83,13 @@ class PackitoCli {
       const packito = new Packito(args.dist, args.n, args._);
       const pkg = getPackage();
       await packito.transform(pkg);
+      await packito.write();
       // this.log('args=', args);
     }
   }
 }
-
-const start = async () => {
-  const output = console;
+/* istanbul ignore next */
+const start = async (output = console) => {
   const version = process.versions.node;
   const major = parseInt(version.split('.')[0], 10);
 
@@ -104,5 +104,5 @@ const start = async () => {
   await cli.execute();
   return cli;
 };
-
+export { PackitoCli };
 export default start;
