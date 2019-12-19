@@ -5,10 +5,26 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import path from 'path';
+import fs from 'fs';
 import { expect } from 'chai';
+import rimraf from 'rimraf';
 import Packito from '../src/Packito';
 
+const fsp = fs.promises;
+const TMP_PATH = './tmp_test';
 describe('Packito', () => {
+  before(async () => {
+    // Recursive is node >= 12
+    await fsp.mkdir(TMP_PATH);
+  });
+
+  after(async () => {
+    // Recursive is node >= 12
+    // await fsp.rmdir(TMP_PATH, { recursive: true });
+    rimraf.sync(TMP_PATH);
+  });
+
   it('init', async () => {
     const p = new Packito();
     expect(p).to.be.an('object');
@@ -62,6 +78,12 @@ describe('Packito', () => {
     const p = new Packito();
     await p.write();
     expect(p.error.message).to.equal(`The "path" argument must be of type string. Received type undefined`);
+  });
+
+  it('write to path', async () => {
+    const p = new Packito(path.join(TMP_PATH, 't1'));
+    await p.write('pkg.json');
+    expect(p.error).to.equal(undefined);
   });
 
   it('publish', async () => {
