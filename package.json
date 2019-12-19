@@ -27,8 +27,7 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "minimist": "^1.2.0",
-    "node-emoji": "^1.10.0",
-    "node-fetch": "^2.6.0"
+    "node-emoji": "^1.10.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
