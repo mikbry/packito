@@ -11,20 +11,22 @@ import path from 'path';
 const fsp = fs.promises;
 
 export default class Packito {
-  constructor(outputDir, noPublish, publisherArguments = []) {
+  constructor(outputDir, noPublish, publisherArguments) {
     this.outputDir = outputDir;
     this.noPublish = noPublish;
     this.publisherArguments = publisherArguments;
   }
 
-  async readOptions() {
-    const f = path.join('./', '.packito.json');
+  async readOptions(optionsFile = '.packito.json', dir = './') {
+    const f = path.join(dir, optionsFile);
     let filehandle = null;
     let options = null;
     try {
       filehandle = await fsp.open(f, 'r');
       const raw = await filehandle.readFile();
       options = JSON.parse(raw);
+    } catch (error) {
+      this.error = error;
     } finally {
       if (filehandle) {
         await filehandle.close();
@@ -37,9 +39,9 @@ export default class Packito {
     return options;
   }
 
-  async transform(_pkg) {
+  async transform(_pkg, _options) {
     const pkg = { ..._pkg };
-    const options = await this.readOptions();
+    const options = _options || (await this.readOptions());
     const { remove, replace } = options;
     if (typeof remove === 'object') {
       Object.keys(remove).forEach(e => {
@@ -64,18 +66,19 @@ export default class Packito {
     }
     this.pkg = pkg;
     this.data = JSON.stringify(this.pkg, null, '\t');
-    await this.write();
     // TODO handle publisher
     return this.pkg;
   }
 
   async write() {
-    // TODO test if outputDir exist
-    const f = path.join(this.outputDir, 'package.json');
     let filehandle = null;
     try {
+      const f = path.join(this.outputDir, 'package.json');
+      // TODO test if outputDir exist
       filehandle = await fsp.open(f, 'w');
       await filehandle.writeFile(this.data);
+    } catch (error) {
+      this.error = error;
     } finally {
       if (filehandle) {
         await filehandle.close();
