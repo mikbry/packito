@@ -98,7 +98,7 @@ describe('Packito', () => {
     expect(p.error).to.equal(undefined);
   });
 
-  it('publish not valid publisher command #dev', async () => {
+  it('publish not valid publisher command', async () => {
     const p = new Packito('./', false, ['yarn', 'echo']);
     stack = [];
     const res = await p.publish(consol);
@@ -106,8 +106,16 @@ describe('Packito', () => {
     expect(stack[0]).to.equal('error Command "echo" not found.');
   });
 
-  it('publish valid command #dev', async () => {
+  it('publish valid command using publisherArguments', async () => {
     const p = new Packito('./', false, ['yarn', '--help']);
+    stack = [];
+    const res = await p.publish(consol);
+    expect(res.code).to.equal(0);
+  });
+
+  it('publish valid command using publisher prop', async () => {
+    const p = new Packito('./', false);
+    p.publisher = { name: 'yarn --help' };
     stack = [];
     const res = await p.publish(consol);
     expect(res.code).to.equal(0);

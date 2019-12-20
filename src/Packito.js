@@ -62,8 +62,6 @@ export default class Packito {
       this.publisher = options.publisher;
     } else if (typeof options.publisher === 'string') {
       this.publisher = { name: options.publisher };
-    } else if (this.publisherArguments) {
-      this.publisher = { name: this.publisherArguments };
     }
     this.pkg = pkg;
     this.data = JSON.stringify(this.pkg, null, '\t');
@@ -96,7 +94,7 @@ export default class Packito {
     if (!this.noPublish && (this.publisher || this.publisherArguments)) {
       let [exe, ...args] = this.publisherArguments || [];
       if (!exe) {
-        [exe, ...args] = this.publisher.split(' ');
+        [exe, ...args] = this.publisher.name.split(' ');
       }
       return spawn(exe, args, undefined, con);
     }
