@@ -12,7 +12,19 @@ import rimraf from 'rimraf';
 import Packito from '../src/Packito';
 
 const fsp = fs.promises;
+
+let stack = [];
+const consol = {
+  log: (text, ...opts) => {
+    stack.push(text.concat(' ', ...opts).trim());
+  },
+  error: (text, ...opts) => {
+    stack.push(text.concat(' ', ...opts).trim());
+  },
+};
+
 const TMP_PATH = './tmp_test';
+
 describe('Packito', () => {
   before(async () => {
     // Recursive is node >= 12
@@ -86,15 +98,32 @@ describe('Packito', () => {
     expect(p.error).to.equal(undefined);
   });
 
-  it('publish', async () => {
-    const p = new Packito();
-    await p.publish();
-    expect(p).to.be.an('object');
+  it('publish not valid publisher command', async () => {
+    const p = new Packito('./', false, ['yarn', 'echo']);
+    stack = [];
+    const res = await p.publish(consol);
+    expect(res.code).to.equal(1);
+    expect(stack[0]).to.equal('error Command "echo" not found.');
+  });
+
+  it('publish valid command using publisherArguments', async () => {
+    const p = new Packito('./', false, ['yarn', '--help']);
+    stack = [];
+    const res = await p.publish(consol);
+    expect(res.code).to.equal(0);
+  });
+
+  it('publish valid command using publisher prop', async () => {
+    const p = new Packito('./', false);
+    p.publisher = { name: 'yarn --help' };
+    stack = [];
+    const res = await p.publish(consol);
+    expect(res.code).to.equal(0);
   });
 
   it('no publish', async () => {
     const p = new Packito('./', true);
-    await p.publish();
-    expect(p).to.be.an('object');
+    const res = await p.publish();
+    expect(res.code).to.equal(-1);
   });
 });
