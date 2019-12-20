@@ -7,6 +7,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import spawn from './utils/spawn';
 
 const fsp = fs.promises;
 
@@ -91,9 +92,14 @@ export default class Packito {
     }
   }
 
-  async publish() {
-    if (!this.noPublish) {
-      // TODO
+  async publish(con) {
+    if (!this.noPublish && (this.publisher || this.publisherArguments)) {
+      let [exe, ...args] = this.publisherArguments || [];
+      if (!exe) {
+        [exe, ...args] = this.publisher.split(' ');
+      }
+      return spawn(exe, args, undefined, con);
     }
+    return { code: -1 };
   }
 }

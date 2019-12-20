@@ -12,6 +12,6 @@
     "module": "index.mjs"
   },
   "publisher": {
-    "name": "np"
+    "name": "yarn test"
   }
 }
