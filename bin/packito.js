@@ -21,14 +21,16 @@
       //
     }
   } else {
+    const path = require('path');
     try {
-      const path = require('path');
       // eslint-disable-next-line import/no-unresolved
       // eslint-disable-next-line import/no-dynamic-require
       require(path.join(__dirname, '../index.js'));
     } catch (e) {
       //
-      output.error(e);
+      // output.error(e);
+      // eslint-disable-next-line import/no-dynamic-require
+      require(path.join(__dirname, '../dist/index.js'));
     }
   }
 })();
