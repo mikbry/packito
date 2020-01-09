@@ -52,7 +52,7 @@ describe('Packito', () => {
     const p = new Packito();
     const opts = await p.readOptions('dummy.json');
     expect(opts).to.be.an('object');
-    expect(Object.keys(opts).length).to.equal(0);
+    expect(Object.keys(opts).length).to.equal(2);
     expect(p.error.message).to.equal("ENOENT: no such file or directory, open 'dummy.json'");
   });
 
