@@ -16,14 +16,6 @@
 
 > Packito is a cli tool to clean package before publishing it.
 
-**[WIP] this tool is in work in progress, you could help to enhance it !**
-
-TODO:
-
-- [ ] default configuration
-- [ ] publish using publisher 
-- [ ] copy files
-- [ ] dist in .packito.json
 
 ### Purpose
 Before publishing to npm, did you take care of your package.json ?
@@ -97,8 +89,8 @@ This json should be at root of the project, a sample:
 | ----------- | --- | ----------- |
 | remove     | object | all keys to remove from packages.json (if =true or ='*' replace all) |
 | replace     | object | all keys+values to replace in packages.json |
-| files     | object | all files to copy in dist |
-| dist     | string | folder to publish to |
+| copy     | object | all files to copy in dist |
+| output     | string | folder to publish to |
 | publisher     | string\|object | The publisher to use (npm, np, lerna) |
 
 ***Other command examples***
