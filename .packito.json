@@ -15,5 +15,5 @@
     "name": "yarn test"
   },
   "output": "./dist",
-  "copy": ["bin", "README.md", "LICENSE"]
+  "copy": ["bin", "README.md", "LICENSE", "dummy"]
 }
