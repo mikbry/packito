@@ -14,5 +14,6 @@
   "publisher": {
     "name": "yarn test"
   },
-  "output": "./dist"
+  "output": "./dist",
+  "copy": ["bin", "README.md", "LICENSE"]
 }
