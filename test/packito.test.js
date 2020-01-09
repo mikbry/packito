@@ -89,7 +89,9 @@ describe('Packito', () => {
   it('write error', async () => {
     const p = new Packito();
     await p.write();
-    expect(p.error.message).to.equal(`The "path" argument must be of type string. Received type undefined`);
+    expect(
+      /^(The "path" argument must be of type string. Received){1}( type)?( undefined){1}/.test(p.error.message),
+    ).to.equal(true);
   });
 
   it('write to path', async () => {
