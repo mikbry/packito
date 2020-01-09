@@ -34,7 +34,14 @@ export default class Packito {
       }
     }
     if (!options) {
-      options = {};
+      // Default options
+      options = {
+        remove: {
+          devDependencies: '*',
+          script: '*',
+        },
+        copy: ['README.md', 'LICENSE'],
+      };
     }
     this.options = options;
     return options;
