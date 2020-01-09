@@ -76,6 +76,17 @@ export default class Packito {
     return this.pkg;
   }
 
+  async copyRecursive(file, outputDir) {
+    try {
+      await fsp.copyFile(file, path.join(outputDir, path.basename(file)));
+    } catch (error) {
+      if (error.code === 'EISDIR') {
+        const files = await fsp.readdir(file);
+        await Promise.all(files.map(f => this.copyRecursive(path.join(file, f), path.join(outputDir, file))));
+      }
+    }
+  }
+
   async write(packageFile = 'package.json') {
     let filehandle = null;
     let outputDir = this.options ? this.options.output : undefined;
@@ -98,6 +109,9 @@ export default class Packito {
       if (filehandle) {
         await filehandle.close();
       }
+    }
+    if (this.options && Array.isArray(this.options.copy)) {
+      await Promise.all(this.options.copy.map(e => this.copyRecursive(e, outputDir)));
     }
   }
 

@@ -10,7 +10,7 @@
   "author": "Mik <mik@miklabs.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c && cp -r ./bin ./dist && ./dist/bin/packito.js  && cp -f ./LICENSE ./dist/LICENSE",
+    "build": "rollup -c && ./bin/packito.js",
     "dev": "rollup -c  &&  cross-env NODE_ENV=development node ./dist",
     "lint": "$(yarn bin)/eslint src",
     "test": "cross-env NODE_ENV=test  $(yarn bin)/mocha  --require esm",
