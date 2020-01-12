@@ -13,12 +13,12 @@
 // chmod +x packito.js
 
 (async () => {
-  const output = console;
+  let error = false;
   if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     try {
       await import('../src/cli');
     } catch (e) {
-      //
+      error = true;
     }
   } else {
     const path = require('path');
@@ -27,10 +27,16 @@
       // eslint-disable-next-line import/no-dynamic-require
       require(path.join(__dirname, '../index.js'));
     } catch (e) {
-      //
-      // output.error(e);
-      // eslint-disable-next-line import/no-dynamic-require
-      require(path.join(__dirname, '../dist/index.js'));
+      try {
+        // eslint-disable-next-line import/no-dynamic-require
+        require(path.join(__dirname, '../dist/index.js'));
+      } catch (err) {
+        error = true;
+      }
     }
+  }
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.log("Wrong configuration, can't find libs.");
   }
 })();
