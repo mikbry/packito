@@ -18,14 +18,14 @@ export default class Packito {
     this.publisherArguments = publisherArguments;
   }
 
-  async readOptions(optionsFile = '.packito.json', dir = './') {
-    const f = path.join(dir, optionsFile);
+  async readJSONFile(fileName, dir = './') {
+    const f = path.join(dir, fileName);
     let filehandle = null;
-    let options = null;
+    let result = null;
     try {
       filehandle = await fsp.open(f, 'r');
       const raw = await filehandle.readFile();
-      options = JSON.parse(raw);
+      result = JSON.parse(raw);
     } catch (error) {
       this.error = error;
     } finally {
@@ -33,6 +33,11 @@ export default class Packito {
         await filehandle.close();
       }
     }
+    return result;
+  }
+
+  async readOptions(optionsFile = '.packito.json', dir = './') {
+    let options = await this.readJSONFile(optionsFile, dir);
     if (!options) {
       // Default options
       options = {
@@ -48,7 +53,7 @@ export default class Packito {
   }
 
   async transform(_pkg, _options) {
-    const pkg = { ..._pkg };
+    const pkg = _pkg || (await this.readJSONFile('package.json'));
     const options = _options || (await this.readOptions());
     const { remove, replace } = options;
     if (typeof remove === 'object') {

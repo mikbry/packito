@@ -42,7 +42,7 @@ class PackitoCli {
   }
 
   header() {
-    const { version } = getPackage('packito');
+    const { version } = getPackage();
     this.log(chalk.bold(emoji.emojify(`Packito cleans package before publishing v${version}`)));
   }
 
@@ -81,8 +81,7 @@ class PackitoCli {
     } else {
       // WIP execute
       const packito = new Packito(args.dist, args.n, args._);
-      const pkg = getPackage();
-      await packito.transform(pkg);
+      await packito.transform();
       await packito.write();
       // this.log('args=', args);
     }
