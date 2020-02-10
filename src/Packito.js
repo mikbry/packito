@@ -52,9 +52,9 @@ export default class Packito {
     return options;
   }
 
-  async transform() {
-    const pkg = await this.readJSONFile('package.json');
-    const options = await this.readOptions();
+  async transform(_pkg, _options) {
+    const pkg = _pkg || (await this.readJSONFile('package.json'));
+    const options = _options || (await this.readOptions());
     const { remove, replace } = options;
     if (typeof remove === 'object') {
       Object.keys(remove).forEach(e => {
