@@ -109,7 +109,7 @@ $ packito -d ./publish np patch
 - Follows [Node best practices](https://github.com/goldbergyoni/nodebestpractices)
 
 ### Requirements
-- Node >= 10
+- Node >= 12
 
 ## Contribution
 
