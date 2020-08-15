@@ -15,7 +15,7 @@ describe('Package', () => {
   });
   it('getPackageDependencyVersion chalk', async () => {
     const p = getPackageDependencyVersion('chalk');
-    expect(p).to.equal('3.0.0');
+    expect(p).to.equal('4.1.0');
   });
   it('getPackageDependencyVersion dummy', async () => {
     const p = getPackageDependencyVersion('dummy', '1.0.0');

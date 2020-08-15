@@ -57,14 +57,14 @@ export default class Packito {
     const options = _options || (await this.readOptions());
     const { remove, replace } = options;
     if (typeof remove === 'object') {
-      Object.keys(remove).forEach(e => {
+      Object.keys(remove).forEach((e) => {
         if (remove[e] || remove[e] === '*') {
           delete pkg[e];
         }
       });
     }
     if (typeof replace === 'object') {
-      Object.keys(replace).forEach(e => {
+      Object.keys(replace).forEach((e) => {
         if (replace[e]) {
           pkg[e] = replace[e];
         }
@@ -87,7 +87,7 @@ export default class Packito {
     } catch (error) {
       if (error.code === 'EISDIR') {
         const files = await fsp.readdir(file);
-        await Promise.all(files.map(f => this.copyRecursive(path.join(file, f), path.join(outputDir, file))));
+        await Promise.all(files.map((f) => this.copyRecursive(path.join(file, f), path.join(outputDir, file))));
       }
     }
   }
@@ -95,6 +95,7 @@ export default class Packito {
   async write(packageFile = 'package.json') {
     let filehandle = null;
     let outputDir = this.options ? this.options.output : undefined;
+    this.error = undefined;
     if (!outputDir) {
       ({ outputDir } = this);
     }
@@ -107,6 +108,9 @@ export default class Packito {
       const f = path.join(outputDir, packageFile);
       // TODO test if outputDir exist
       filehandle = await fsp.open(f, 'w');
+      if (!this.data) {
+        await this.transform();
+      }
       await filehandle.writeFile(this.data);
     } catch (error) {
       this.error = error;
@@ -116,7 +120,7 @@ export default class Packito {
       }
     }
     if (this.options && Array.isArray(this.options.copy)) {
-      await Promise.all(this.options.copy.map(e => this.copyRecursive(e, outputDir)));
+      await Promise.all(this.options.copy.map((e) => this.copyRecursive(e, outputDir)));
     }
   }
 

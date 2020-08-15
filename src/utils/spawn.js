@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Copyright (c) 2019-present, Mik BRY
  *
@@ -10,11 +11,11 @@ const aspawn = async (exe, args, opts, con = console) =>
   new Promise((resolve, reject) => {
     const proc = spawn(exe, args, opts);
 
-    proc.stdout.on('data', buf => con.log(buf.toString()));
-    proc.stderr.on('data', buf => con.error(buf.toString()));
+    proc.stdout.on('data', (buf) => con.log(buf.toString()));
+    proc.stderr.on('data', (buf) => con.error(buf.toString()));
 
     proc.on('error', reject);
-    proc.on('close', code => {
+    proc.on('close', (code) => {
       resolve({
         code,
       });
