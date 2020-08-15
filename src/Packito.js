@@ -103,8 +103,6 @@ export default class Packito {
       await fsp.mkdir(outputDir, { recursive: true });
     } catch (error) {
       //
-      this.error = error;
-      return;
     }
     try {
       const f = path.join(outputDir, packageFile);
@@ -113,7 +111,6 @@ export default class Packito {
       if (!this.data) {
         await this.transform();
       }
-
       await filehandle.writeFile(this.data);
     } catch (error) {
       this.error = error;

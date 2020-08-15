@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Copyright (c) 2019-present, Mik BRY
  *
