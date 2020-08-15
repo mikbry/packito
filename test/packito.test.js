@@ -89,13 +89,12 @@ describe('Packito', () => {
   it('write error', async () => {
     const p = new Packito();
     await p.write();
-    expect(
-      /^(The "path" argument must be of type string. Received){1}( type)?( undefined){1}/.test(p.error.message),
-    ).to.equal(true);
+    expect(p.error.code).to.equal('ERR_INVALID_ARG_TYPE');
   });
 
   it('write to path', async () => {
     const p = new Packito(path.join(TMP_PATH, 't1'));
+    // await p.transform();
     await p.write('pkg.json');
     expect(p.error).to.equal(undefined);
   });
